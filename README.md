@@ -7,5 +7,7 @@
 
 **Team work:**
 There are four steps in our project. 
+
 ***Retrieval of data*** Using R code to parse multiple xml files into a single csv file. We created a dataframe to store multiple types of information in the original xml file. The dataframe contains record ID for each newspaper, the publication date of the article, the publisher, the full text of the article and the optional column, abstract.
+
 ***Handling OCR errors*** Scanning from the pdf format, the texts in the dataset may contain unreadable characters. Therefore, we need to write algorithms to do the optical character recognition and clean the data so that we could apply following algorithms to analyze. Basically, we remove the 
