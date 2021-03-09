@@ -1,0 +1,58 @@
+---
+title: "Datathon preprocessing"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(XML)
+```
+
+```{r}
+print(timestamp())
+ 
+data <- data.frame(RecordID = "", Publication ="", AlphaPubDate = "", Publisher = "", FullText = "", Abstract = "")
+
+path <- "/Users/bernice/Desktop/nyu/AtlantaDailyWorld_dataset/AtlantaDailyWorld/ADW_20171104194529_00001/" # Change the path here
+all_files <- list.files(path, pattern = "*.xml", full.names = TRUE)
+for(file_name in all_files) {
+  xmlTree <- xmlTreeParse(file = file_name)
+  temp_frame <- xmlToDataFrame(nodes =  getNodeSet(xmlRoot(xmlTree), "/"))
+  if(!"FullText" %in% names(temp_frame)) {
+    temp_frame["FullText"] = NA
+  }
+  if(!"Abstract" %in% names(temp_frame)) {
+    temp_frame["Abstract"] = NA
+  }
+  data <- rbind(data, temp_frame[c("RecordID","Publication", "AlphaPubDate","Publisher","FullText", "Abstract")])
+}
+
+print(timestamp())
+```
+```{r}
+write.csv(data,"/Users/bernice/Desktop/nyu/Dataset_for_datathon/Atlantic_new.csv", row.names = FALSE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
